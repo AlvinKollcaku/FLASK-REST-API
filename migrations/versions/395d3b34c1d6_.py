@@ -51,7 +51,7 @@ def upgrade():
     )
     op.create_table('rsvp',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('status', sa.Enum('Accept', 'Decline', 'Tentative'), nullable=False),
+    sa.Column('status', sa.Enum('Accept', 'Decline', 'Tentative', name='status_enum'), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('event_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['event_id'], ['event.id'], ),
