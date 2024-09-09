@@ -8,7 +8,7 @@ from flask_jwt_extended import create_access_token,create_refresh_token,get_jwt_
 
 from DB import db
 from models import UserModel
-from schemas import UserSchema
+from schemas import UserSchema, PlainUserSchema
 from blocklist import BLOCKLIST
 
 class LoginSchema(Schema):
@@ -28,6 +28,7 @@ class UserRegister(MethodView):
         user = UserModel(
             username=user_data["username"],
             password=pbkdf2_sha256.hash(user_data["password"]),
+            email=user_data["email"]
         )
         db.session.add(user)
         db.session.commit()
@@ -59,7 +60,7 @@ class User(MethodView):
 
 @blp.route("/login")
 class UserLogin(MethodView):
-    @blp.arguments(UserSchema)
+    @blp.arguments(PlainUserSchema)
     def post(self, user_data):
         user = UserModel.query.filter(UserModel.username == user_data["username"]).first()
 

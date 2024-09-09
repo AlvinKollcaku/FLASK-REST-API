@@ -9,6 +9,6 @@ class EventModel(db.Model):
     organizer_id = db.Column(
         db.Integer, db.ForeignKey("user.id"), unique=False, nullable=False
     )
-    tags=db.relationship("TagModel", back_populates="events",secondary="event_tag")
+    tags=db.relationship("TagModel", back_populates="events",secondary="events_tags")
     rsvps = db.relationship("RsvpModel", back_populates="event", lazy="dynamic",cascade="all, delete")
     organizer = db.relationship("UserModel", back_populates="events")

@@ -6,6 +6,7 @@ class PlainEventSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
     capacity=fields.Int(required=True)
+    organizer_id = fields.Int(dump_only=True)
 
 class PlainUserSchema(Schema):
     id = fields.Int(dump_only=True)
@@ -21,7 +22,6 @@ class PlainTagSchema(Schema):
     name = fields.Str(required=True)
 
 class EventSchema(PlainEventSchema):
-    organizer_id= fields.Int(required=True)
     organizer=fields.Nested(PlainUserSchema(), dump_only=True)
     rsvps=fields.List(fields.Nested(PlainRsvpSchema()), dump_only=True)
     tags=fields.List(fields.Nested(PlainTagSchema()), dump_only=True)
@@ -48,9 +48,9 @@ class EventUpdateSchema(Schema):
     capacity = fields.Int()
 
 class RsvpUpdateSchema(Schema):
-    name = fields.Str()
+    status = fields.Str(validate=validate.OneOf(["Accept", "Decline", "Tentative"]))
 
-class UserSchema(Schema):
-    id = fields.Int(dump_only=True)
-    username = fields.Str(required=True)
-    password = fields.Str(required=True, load_only=True)
+class UserSchema(PlainUserSchema):
+    email = fields.Str(required=True, load_only=True)
+    rsvps = fields.List(fields.Nested(PlainRsvpSchema()), dump_only=True)
+    events = fields.List(fields.Nested(PlainEventSchema()), dump_only=True)

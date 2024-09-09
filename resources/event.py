@@ -35,7 +35,10 @@ class Event(MethodView):
             abort(403, message="You are not authorized to delete this event.")
 
         if event.rsvps or event.tags:
-            abort(400, message="Cannot delete an event that has RSVPs or tags associated with it.")
+            #abort(400, message="Cannot delete an event that has RSVPs or tags associated with it.")
+            #if it has rsvps implement the task queue to inform all people who have rsvpd that the
+            #event is deleted
+            pass
 
         try:
             db.session.delete(event)

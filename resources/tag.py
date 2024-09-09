@@ -11,10 +11,10 @@ from schemas import TagSchema, EventSchema, EventsTagSchema, PlainTagSchema
 
 blp = Blueprint('Tags', 'tags',description="Operations on tags")
 
-@blp.route("/book/<int:eventId>/tag/<int:tagId>")
+@blp.route("/event/<int:eventId>/tag/<int:tagId>")
 class LinkTagToEvent(MethodView):
-    @jwt_required(fresh=True)
-    @blp.response(201,TagSchema)
+    @jwt_required()
+    @blp.response(200,TagSchema)
     def post(self,eventId,tagId): #Linking an existing tag to an existing event
         event = EventModel.query.get_or_404(eventId)
         tag = TagModel.query.get_or_404(tagId)
@@ -54,7 +54,7 @@ class Tag(MethodView):
     @jwt_required()
     @blp.arguments(TagSchema)
     @blp.response(201,TagSchema)
-    def post(self,data,libraryId): # This creates a tag
+    def post(self,data): # This creates a tag
         if TagModel.query.filter(TagModel.name == data["name"]).first():
             abort(400, message="A tag with that name already exists.")
 
@@ -68,5 +68,13 @@ class Tag(MethodView):
                 500,
                 message=str(e),
             )
+
+        return tag
+
+@blp.route("/tag/<int:tagId>")
+class GetTag(MethodView):
+    @blp.response(200,TagSchema)
+    def get(self, tagId):
+        tag = TagModel.query.get_or_404(tagId)
 
         return tag

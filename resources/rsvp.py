@@ -8,12 +8,8 @@ from flask_jwt_extended import create_access_token,create_refresh_token,get_jwt_
 from flask import jsonify
 
 from DB import db
-from models import UserModel, RsvpModel
+from models import UserModel, RsvpModel, EventModel
 from schemas import UserSchema, RsvpSchema, PlainRsvpSchema,RsvpUpdateSchema
-
-class LoginSchema(Schema):
-    access_token = fields.Str(required=True)
-    refresh_token = fields.Str(required=True)
 
 blp = Blueprint("Rsvps", "rspvs", description="Operations on users")
 
@@ -42,10 +38,15 @@ class Rsvp(MethodView):
     @jwt_required()
     @blp.arguments(RsvpUpdateSchema)
     @blp.response(200, RsvpSchema)
-    def put(self, data, rsvp_id):
-        rsvp = RsvpModel.query.get_or_404(rsvp_id)
-        rsvp.status = data.get("status", rsvp.status)
+    def put(self, data, event_id):
+        current_user_id = get_jwt_identity()
+        event = EventModel.query.get_or_404(event_id) #to check the existence of the event
+        rsvp = RsvpModel.query.filter_by(event_id=event_id, user_id=current_user_id).first()
 
+        if rsvp is None:
+            abort(404, message="RSVP record not found for this user and event.")
+
+        rsvp.status = data.get("status", rsvp.status)
         try:
             db.session.commit()
         except SQLAlchemyError:
@@ -53,4 +54,18 @@ class Rsvp(MethodView):
             abort(500, message="An error occurred while updating the RSVP.")
 
         return rsvp
+
+
+@blp.route('/event/<int:event_id>/rsvps')
+class EventRsvps(MethodView):
+    @blp.response(200, RsvpSchema(many=True))
+    def get(self, event_id):
+        try:
+            rsvps = RsvpModel.query.filter_by(event_id=event_id).all()
+            if not rsvps:
+                abort(404, message="No RSVPs found for this event.")
+            return rsvps
+        except SQLAlchemyError:
+            abort(500, message="An error occurred while retrieving RSVPs.")
+
 
