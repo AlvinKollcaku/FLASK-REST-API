@@ -13,7 +13,7 @@ from schemas import UserSchema, RsvpSchema, PlainRsvpSchema,RsvpUpdateSchema
 
 blp = Blueprint("Rsvps", "rspvs", description="Operations on users")
 
-@blp.route('/rsvp/<int:event_id>')
+@blp.route('/event/<int:event_id>/rsvp')
 class Rsvp(MethodView):
     @jwt_required()
     @blp.arguments(PlainRsvpSchema)
