@@ -97,7 +97,7 @@ def create_app(db_url=None):
 
 app = create_app()
 
-@app.route("/")
+@app.route("/rsvp-u6ds.onrender.com")
 def hello():
     return "Hello World!"
 
