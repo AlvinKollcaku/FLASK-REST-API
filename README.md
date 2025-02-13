@@ -23,3 +23,8 @@ This project is a REST API built using Flask, designed for secure and efficient 
 ## Database schema
 ![image](https://github.com/user-attachments/assets/3a8f546b-0e2d-4f49-8770-70ccdb809c39)
 
+## Endpoints handled by the API
+
+![image](https://github.com/user-attachments/assets/92e7ba33-db78-4237-8351-694f7c6f9ca8)
+
+
