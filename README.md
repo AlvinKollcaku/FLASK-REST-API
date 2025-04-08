@@ -75,8 +75,6 @@ This project is a REST API built using Flask, designed for secure and efficient 
 
 ![Unauthorized Modification](https://github.com/user-attachments/assets/565c2a1f-72e5-4900-83ce-88e83e43e7d2)
 
-![Unauthorized Deletion](https://github.com/user-attachments/assets/40131502-df49-4298-85da-d93c1acc9e1a)
-
 ---
 
 ## 7. Create a Tag
