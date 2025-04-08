@@ -111,7 +111,7 @@ The marshmallow schemas validate the arguments passed by the user, if they do no
 --
 ## How to run it
 
-Run flask run in the terminal. I used Insomnia as the tool to test the Api.
+Run 'flask run' in the terminal. I used Insomnia as the tool to test the Api. 
 
 
 
