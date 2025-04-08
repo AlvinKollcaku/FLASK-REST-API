@@ -2,6 +2,13 @@
 
 This project is a REST API built using Flask, designed for secure and efficient data handling with seamless database migrations. It integrates JWT-based authentication, object-relational mapping with SQLAlchemy, data serialization/deserialization with Marshmallow, and containerization with Docker.
 
+- [Technologies Used](#technologies-used)  
+- [Project Features](#project-features)  
+- [Database Schema](#database-schema)  
+- [Endpoints Handled by the API](#endpoints-handled-by-the-api)  
+- [Walkthrough](#walkthrough)  
+- [How to Run It](#how-to-run-it)  
+
 ## Technologies Used
 
 - **Flask**: Lightweight Python web framework for building the API.
