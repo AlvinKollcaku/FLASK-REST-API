@@ -48,8 +48,13 @@ class User(MethodView):
         user = UserModel.query.get(user_id)
         return user
 
+    @jwt_required()
     def delete(self, user_id):
         user = UserModel.query.get_or_404(user_id)
+        current_user_id = int(get_jwt_identity())
+
+        if str(user.id) != str(current_user_id):
+            abort(403, message="You are not authorized to delete this account.")
         try:
             db.session.delete(user)
             db.session.commit()
@@ -65,7 +70,7 @@ class UserLogin(MethodView):
         user = UserModel.query.filter(UserModel.username == user_data["username"]).first()
 
         if user and pbkdf2_sha256.verify(user_data["password"], user.password):
-            access_token = create_access_token(identity=user.id, fresh=True)
+            access_token = create_access_token(identity=str(user.id), fresh=True)
             return {"access_token": access_token}, 200
 
         abort(401, message="Invalid credentials.")

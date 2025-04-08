@@ -6,15 +6,15 @@ import config
 from DB import db
 from blueprints import register_blueprints
 from flask_smorest import Api
-from config import config
+from config import Config
+from error_handlers import register_error_handlers
 
 
 def create_app(config_name='default'):
     app = Flask(__name__)
 
-    # Load configuration from config file
-    app.config.from_object(config[config_name])
-    config[config_name].init_app(app)
+    app.config.from_object(Config) #don't use dict for object injection->simply use classes
+    #config[config_name].init_app(app)
 
     db.init_app(app)
     Migrate(app, db)
@@ -27,7 +27,6 @@ def create_app(config_name='default'):
     jwt = JWTManager(app)
 
     # Middleware and Error Handlers
-    from error_handlers import register_error_handlers
     register_error_handlers(app, jwt)
 
     return app

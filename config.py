@@ -10,19 +10,6 @@ class Config:
     OPENAPI_SWAGGER_UI_URL = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "249751419766024081467219411349889851747")
+    #SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///data.db")
+    SQLALCHEMY_DATABASE_URI = "sqlite:///data.db"
 
-    @staticmethod
-    def init_app(app):
-        pass  # Can be used for further app-specific config, like logging, etc.
-
-class DevelopmentConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///data.db")
-
-class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")  # Set production DB URL in env variables
-
-config = {
-    'development': DevelopmentConfig,
-    'production': ProductionConfig,
-    'default': DevelopmentConfig
-}

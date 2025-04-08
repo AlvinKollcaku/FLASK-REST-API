@@ -31,8 +31,8 @@ class Event(MethodView):
         event = EventModel.query.get_or_404(event_id)
         current_user_id = get_jwt_identity()
 
-        if event.organizer_id != current_user_id:
-            abort(403, message="You are not authorized to delete this event.")
+        if str(event.organizer_id) != str(current_user_id):
+            abort(403, message="You are not authorized to update this event.OrgId:")
 
         if event.rsvps or event.tags:
             #abort(400, message="Cannot delete an event that has RSVPs or tags associated with it.")
@@ -54,9 +54,9 @@ class Event(MethodView):
     @blp.response(201,EventSchema)
     def put(self, data, event_id):
         event = EventModel.query.get_or_404(event_id)
-        current_user_id = get_jwt_identity()
+        current_user_id = int(get_jwt_identity())
 
-        if event.organizer_id != current_user_id:
+        if str(event.organizer_id) != str(current_user_id):
             abort(403, message="You are not authorized to update this event.")
 
         if "name" in data:

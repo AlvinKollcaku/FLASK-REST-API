@@ -1,5 +1,3 @@
-# error_handlers.py
-
 from flask import jsonify
 from blocklist import BLOCKLIST
 
@@ -28,11 +26,13 @@ def register_error_handlers(app, jwt):
             jsonify({"message": "The token has expired", "error": "expired_token"}), 401
         )
 
+    """
     @jwt.invalid_token_loader
     def invalid_token_callback(error):
         return (
             jsonify({"message": "Signature verification failed", "error": "invalid_token"}), 401
         )
+    """
 
     @jwt.unauthorized_loader
     def missing_token_callback(error):

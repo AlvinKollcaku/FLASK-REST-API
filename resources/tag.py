@@ -34,8 +34,6 @@ class LinkTagToEvent(MethodView):
     @jwt_required()
     @blp.response(201, EventsTagSchema)
     def delete(self, book_id, tagId):  # Unlinking a tag to a book
-
-        # 1)Retrieve both components from their respective tables
         event = EventModel.query.get_or_404(book_id)
         tag = TagModel.query.get_or_404(tagId)
 
