@@ -97,9 +97,21 @@ This project is a REST API built using Flask, designed for secure and efficient 
 
 ## 10. Other Endpoints
 
-Deletion and updating work similarly as shown in the examples above.
+Deletion and updating work similarly as shown in the examples above. 
 
+---
 
+## Handling incorrect request
+The marshmallow schemas validate the arguments passed by the user, if they do not match the schema than an error message is sent back. For example:
+
+![image](https://github.com/user-attachments/assets/70e2a8f1-2977-458c-b89a-2b00b63fd39d)
+
+![image](https://github.com/user-attachments/assets/90326496-48a6-40f5-a522-42dfa8e24180)
+
+--
+## How to run it
+
+Run flask run in the terminal. I used Insomnia as the tool to test the Api.
 
 
 
